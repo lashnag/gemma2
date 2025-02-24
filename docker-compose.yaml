@@ -11,6 +11,7 @@ services:
 
   nginx:
     build:
+      context: .
       dockerfile: NginxDockerfile
     container_name: ollama_nginx
     ports:
