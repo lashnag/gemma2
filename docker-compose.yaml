@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    command: >
+      sh -c "ollama serve &
+      sleep 10 &&
+      ollama pull gemma2:9b-instruct-q5_K_M &&
+      ollama run gemma2:9b-instruct-q5_K_M"
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: ollama_nginx
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    env_file:
+      - .env
+    environment:
+      - OLLAMA_USERNAME=${OLLAMA_USERNAME}
+      - OLLAMA_PASSWORD=${OLLAMA_PASSWORD}
+    entrypoint: >
+      sh -c "echo '${OLLAMA_USERNAME}:$(openssl passwd -apr1 ${OLLAMA_PASSWORD})' > /etc/nginx/.htpasswd && nginx -g 'daemon off;'"
+    depends_on:
+      - ollama
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
