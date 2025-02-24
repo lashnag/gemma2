@@ -4,9 +4,9 @@ services:
   ollama:
     image: ollama/ollama
     container_name: ollama
+    command: ["ollama", "run", "gemma2:9b-instruct-q5_K_M"]
     volumes:
       - ollama_data:/root/.ollama
-    command: ollama run gemma2:9b-instruct-q5_K_M
     restart: unless-stopped
 
   nginx:
