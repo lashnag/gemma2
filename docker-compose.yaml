@@ -4,8 +4,7 @@ services:
   ollama:
     image: ollama/ollama
     container_name: ollama
-    entrypoint: [ "/bin/sh", "-c" ]
-    command: ["ollama run gemma2:9b-instruct-q5_K_M"]
+    entrypoint: /bin/sh -c "ollama serve & sleep 5 && ollama run gemma2:9b-instruct-q5_K_M"
     volumes:
       - ollama_data:/root/.ollama
     restart: unless-stopped
