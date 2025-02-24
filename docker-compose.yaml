@@ -6,30 +6,28 @@ services:
       context: .
       dockerfile: OllamaDockerfile
     container_name: ollama
-    ports:
-      - "${GEMMA2_PORT}:11434"
     entrypoint: /bin/sh -c "ollama serve & wait"
     volumes:
       - ollama_data:/root/.ollama
     restart: unless-stopped
 
-#  nginx:
-#    build:
-#      context: .
-#      dockerfile: NginxDockerfile
-#    container_name: ollama_nginx
-#    ports:
-#      - "${GEMMA2_PORT}:5577"
-#    env_file:
-#      - .env
-#    environment:
-#      - GEMMA2_USERNAME=${GEMMA2_USERNAME}
-#      - GEMMA2_PASSWORD=${GEMMA2_PASSWORD}
-#      - GEMMA2_PORT=${GEMMA2_PORT}
-#    depends_on:
-#      - ollama
-#    restart: unless-stopped
-#    command: /bin/sh -c "/usr/local/bin/htpasswd.sh && nginx -g 'daemon off;'"
+  nginx:
+    build:
+      context: .
+      dockerfile: NginxDockerfile
+    container_name: ollama_nginx
+    ports:
+      - "${GEMMA2_PORT}:5577"
+    env_file:
+      - .env
+    environment:
+      - GEMMA2_USERNAME=${GEMMA2_USERNAME}
+      - GEMMA2_PASSWORD=${GEMMA2_PASSWORD}
+      - GEMMA2_PORT=${GEMMA2_PORT}
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    command: /bin/sh -c "/usr/local/bin/htpasswd.sh && nginx -g 'daemon off;'"
 
 volumes:
   ollama_data:
