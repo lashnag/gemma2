@@ -2,11 +2,13 @@ version: '3.8'
 
 services:
   ollama:
-    image: ollama/ollama
+    build:
+      context: .
+      dockerfile: OllamaDockerfile
     container_name: ollama
     ports:
       - "${GEMMA2_PORT}:11434"
-    entrypoint: /bin/sh -c "ollama serve & sleep 5 && ollama run gemma2:9b-instruct-q5_K_M"
+    entrypoint: /bin/sh -c "ollama serve & wait"
     volumes:
       - ollama_data:/root/.ollama
     restart: unless-stopped

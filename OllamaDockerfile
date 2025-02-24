@@ -1,0 +1,2 @@
+FROM ollama/ollama
+CMD ["sh", "-c", "ollama serve & ollama run gemma2:9b-instruct-q5_K_M"]
