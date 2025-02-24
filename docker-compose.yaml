@@ -6,8 +6,11 @@ services:
     container_name: ollama
     volumes:
       - ollama_data:/root/.ollama
-    command: >
-      sh -c "ollama serve & sleep 10 && ollama pull gemma2:9b-instruct-q5_K_M && ollama run gemma2:9b-instruct-q5_K_M"
+    entrypoint: >
+      sh -c "ollama serve &
+             sleep 10 &&
+             ollama pull gemma2:9b-instruct-q5_K_M &&
+             ollama run gemma2:9b-instruct-q5_K_M"
     restart: unless-stopped
 
   nginx:
