@@ -1,0 +1,10 @@
+FROM nginx:latest
+
+RUN apt-get install -y openssl
+
+COPY nginx.template /etc/nginx/nginx.template
+COPY htpasswd.sh /usr/local/bin/htpasswd.sh
+COPY nginx.sh /usr/local/bin/nginx.sh
+
+RUN chmod +x /usr/local/bin/htpasswd.sh
+RUN chmod +x /usr/local/bin/nginx.sh

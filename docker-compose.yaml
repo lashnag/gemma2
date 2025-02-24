@@ -10,12 +10,11 @@ services:
     restart: unless-stopped
 
   nginx:
-    image: nginx:alpine
+    build:
+      dockerfile: NginxDockerfile
     container_name: ollama_nginx
     ports:
       - "${GEMMA2_PORT}:11434"
-    volumes:
-      - ./htpasswd.sh:/docker-entrypoint.d/htpasswd.sh
     env_file:
       - .env
     environment:
@@ -25,6 +24,7 @@ services:
     depends_on:
       - ollama
     restart: unless-stopped
+    command: /bin/sh -c "/usr/local/bin/htpasswd.sh && /usr/local/bin/nginx.sh && nginx -g 'daemon off;'"
 
 volumes:
   ollama_data:

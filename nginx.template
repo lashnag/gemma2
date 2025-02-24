@@ -1,0 +1,16 @@
+events {}
+http {
+   server {
+       listen ${GEMMA2_PORT};
+       server_name localhost;
+
+       location / {
+           proxy_pass http://ollama:11343;
+       }
+
+       location /protected {
+           auth_basic "Restricted Content";
+           auth_basic_user_file /etc/nginx/.htpasswd;
+       }
+   }
+}
