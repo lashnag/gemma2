@@ -18,9 +18,11 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./htpasswd.sh:/docker-entrypoint.d/htpasswd.sh
+    env_file:
+      - .env
     environment:
-      - OLLAMA_USERNAME=${OLLAMA_USERNAME}
-      - OLLAMA_PASSWORD=${OLLAMA_PASSWORD}
+      - GEMMA2_USERNAME=${GEMMA2_USERNAME}
+      - GEMMA2_PASSWORD=${GEMMA2_PASSWORD}
     depends_on:
       - ollama
     restart: unless-stopped
