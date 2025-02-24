@@ -14,7 +14,7 @@ services:
     image: nginx:alpine
     container_name: ollama_nginx
     ports:
-      - "11434:11434"
+      - "${GEMMA2_PORT}:11434"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./htpasswd.sh:/docker-entrypoint.d/htpasswd.sh
