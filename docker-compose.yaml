@@ -5,7 +5,7 @@ services:
     image: ollama/ollama
     container_name: ollama
     ports:
-      - "${GEMMA2_PORT}:11343"
+      - "${GEMMA2_PORT}:11434"
     entrypoint: /bin/sh -c "ollama serve & sleep 5 && ollama run gemma2:9b-instruct-q5_K_M"
     volumes:
       - ollama_data:/root/.ollama
