@@ -1,2 +1,0 @@
-FROM ollama/ollama
-CMD ["sh", "-c", "ollama serve & sleep 30 && ollama pull gemma2:9b-instruct-q5_K_M && ollama run gemma2:9b-instruct-q5_K_M"]

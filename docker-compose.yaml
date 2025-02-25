@@ -2,13 +2,9 @@ version: '3.8'
 
 services:
   ollama:
-    build:
-      context: .
-      dockerfile: OllamaDockerfile
+    image: ollama/ollama
     container_name: ollama
-    ports:
-      - "11666:11434"
-    entrypoint: /bin/sh -c "ollama serve & wait"
+    entrypoint: /bin/sh -c "ollama serve & sleep 30 && ollama pull ${OLLAMA_MODEL} && ollama run ${OLLAMA_MODEL}"
     volumes:
       - ollama_data:/root/.ollama
     restart: unless-stopped
@@ -19,13 +15,13 @@ services:
       dockerfile: NginxDockerfile
     container_name: ollama_nginx
     ports:
-      - "${GEMMA2_PORT}:5577"
+      - "${OLLAMA_PORT}:5577"
     env_file:
       - .env
     environment:
-      - GEMMA2_USERNAME=${GEMMA2_USERNAME}
-      - GEMMA2_PASSWORD=${GEMMA2_PASSWORD}
-      - GEMMA2_PORT=${GEMMA2_PORT}
+      - OLLAMA_USERNAME=${OLLAMA_USERNAME}
+      - OLLAMA_PASSWORD=${OLLAMA_PASSWORD}
+      - OLLAMA_PORT=${OLLAMA_PORT}
     depends_on:
       - ollama
     restart: unless-stopped
