@@ -27,7 +27,7 @@ services:
     depends_on:
       - ollama
     restart: unless-stopped
-    command: nginx -g 'daemon off;'
+    command: /bin/sh -c "/usr/local/bin/htpasswd.sh && nginx -g 'daemon off;'"
 
 volumes:
   ollama_data:
