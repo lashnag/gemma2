@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: OllamaDockerfile
     container_name: ollama
+    ports:
+      - "11666:11434"
     entrypoint: /bin/sh -c "ollama serve & wait"
     volumes:
       - ollama_data:/root/.ollama
