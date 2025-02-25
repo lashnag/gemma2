@@ -2,7 +2,7 @@ FROM nginx:latest
 
 RUN apt-get update && apt-get install -y openssl
 
-COPY nginx.config /etc/nginx/nginx.config
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY htpasswd.sh /usr/local/bin/htpasswd.sh
 
 RUN chmod +x /usr/local/bin/htpasswd.sh
